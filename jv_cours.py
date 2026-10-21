@@ -147,6 +147,31 @@ class Projectile:
             if(self.y < 0):
                 self.actif = False
         #print(self.actif)
+
+
+
+class Button:
+    def __init__(self, x, y, width, height, text, color, text_color):
+        self.rect = pygame.Rect(x, y, width, height)
+        self.text = text
+        self.color = color
+        self.text_color = text_color
+        self.font = pygame.font.Font(None, 36)
+
+    def draw(self, surface):
+        pygame.draw.rect(surface, self.color, self.rect)
+        text_surf = self.font.render(self.text, True, self.text_color)
+        text_rect = text_surf.get_rect(center=self.rect.center)
+        surface.blit(text_surf, text_rect)
+
+    def is_clicked(self, event):
+        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+            if self.rect.collidepoint(event.pos):
+                return True
+        return False
+
+
+
             
 pygame.mixer.music.load("Megalovania.mp3")
 pygame.mixer.music.play()
@@ -161,7 +186,10 @@ phase = 0
 game_over = False
 running = True
 timer_phase = 10
-pause_timer = 3 
+pause_timer = 3
+
+
+
 while running:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
@@ -219,17 +247,17 @@ while running:
     if (projectile_timer <= 0):
         if(phase ==0):
             x_projectile = random.randint(cadre.x, cadre.x + cadre.w)
-            projectiles.append(Projectile(x_projectile, 0, 3, 0, 1, 2))
+            projectiles.append(Projectile(x_projectile, 0, 10, 0, 1, 2))
 
             projectile_timer = 0.2
 
             
         elif(phase == 1):
-            x_projectile = random.randint(cadre.x, cadre.x + cadre.w)
-            projectiles.append(Projectile(x_projectile, 0, 3, 0, 1, 2))
-            x_projectile = random.randint(cadre.x, cadre.x + cadre.w)
-            projectiles.append(Projectile(x_projectile, 0, 3, 0, 1, 2))
-            projectile_timer = 0.3
+            y_projectile = random.randint(cadre.y, cadre.y + cadre.h)
+            projectiles.append(Projectile(0, y_projectile, 10, 1, 0, 5))
+            y_projectile = random.randint(cadre.y, cadre.y + cadre.h)
+            projectiles.append(Projectile(w, y_projectile, 10, -1, 0, 5))
+            projectile_timer = 0.4
 
             
         elif(phase == 2):
