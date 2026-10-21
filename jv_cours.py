@@ -27,6 +27,7 @@ class Joueur:
         self.r = r_player
         self.vitesse = 4
         self.pv = 5
+        self.pv_max = 5
         self.cooldown = False
         self.cooldown_timer = 0
 
@@ -51,10 +52,10 @@ class Joueur:
             self.cooldown_timer = 1
 
     def est_heal(self):
-        if(not self.cooldown):
-            self.cooldown = True
+        if self.pv < self.pv_max:
             self.pv += 1
-            self.cooldown_timer = 1
+            return True
+        return False
 
     def etat_cooldown(self, deltaTime):
         if self.cooldown:
@@ -149,17 +150,23 @@ class Projectile:
             if(self.y < 0):
                 self.actif = False
         #print(self.actif)
+                
 
 class Heal:
     def __init__(self, x_heal, y_heal, r_heal):
         self.x = x_heal
         self.y = y_heal
         self.r = r_heal
-        
-    def colision(self, player):
+        self.actif = True
+
+    def dessiner(self, screen):
+        screen.blit(Heart_img, (self.x - Heart_img.get_width()//2, self.y - Heart_img.get_height()//2))
+
+    def collision(self, player):
         if(abs(self.x - player.x) < self.r + player.r):
             if(abs(self.y - player.y) < self.r + player.r):
-                 player.est_heal()
+                if(player.est_heal()):
+                    self.actif = False
             
 
 # class Button:
@@ -190,6 +197,9 @@ pygame.mixer.music.play()
 
 projectiles = []
 projectile_timer = 0
+
+heals = []
+heal_timer = 5
 
 phase = 0
 
@@ -269,6 +279,8 @@ while running:
         clock.tick(FPS)
         continue
 
+    
+
 
     if (projectile_timer <= 0):
         if(phase ==0):
@@ -293,7 +305,18 @@ while running:
 
             
     else :
-        projectile_timer -= deltaTime 
+        projectile_timer -= deltaTime
+
+
+    #HEAL
+        
+    heal_timer -= deltaTime
+    
+    if(heal_timer <= 0 and len(heals) == 0):
+        x_heal = random.randint(cadre.x + 30, cadre.x + cadre.w - 30)
+        y_heal = random.randint(cadre.y + 30, cadre.y + cadre.h - 30)
+        heals.append(Heal(x_heal, y_heal, 15))
+        heal_timer = 10
 
 
     # DEPLACEMENTS 
@@ -317,6 +340,13 @@ while running:
     projectiles = projectiles_actifs
 
 
+    for heal in heals:
+        heal.collision(player)
+        heal.dessiner(screen)
+
+    heals = [heal for heal in heals if heal.actif]
+
+
     # AFFICHAGE
     
     cadre.dessiner(screen)
@@ -324,7 +354,12 @@ while running:
     player.afficher_pv(screen)
     
     
-    
+    if(timer_phase <= 0):
+        phase += 1
+        timer_phase = 10
+        projectiles = []
+        heals = []
+        pause_timer = 3
     
   
     timer_phase -= deltaTime
