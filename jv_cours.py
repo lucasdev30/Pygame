@@ -9,8 +9,8 @@ w = 1280
 h = 800
 screen = pygame.display.set_mode((w, h))
 
-Heart_img = pygame.image.load("Red Heart.png")
-Heart_img = pygame.transform.scale(Heart_img, (30, 30))
+Heart_image = pygame.image.load("Red Heart.png")
+Heart_image = pygame.transform.scale(Heart_image, (30, 30))
 
 #horloge
 clock = pygame.time.Clock()
@@ -38,12 +38,12 @@ class Joueur:
         color = "cyan"
         if(self.cooldown):
             color = "grey"
-            color = "pink"
+            color = "red"
         pygame.draw.circle(screen, color, (self.x, self.y), self.r)
 
     def afficher_pv(self, screen):
         for i in range(self.pv):
-            screen.blit(Heart_img,(10 + i * 35, 10))
+            screen.blit(Heart_image,(10 + i * 35, 10))
 
     def est_touche(self):
         if(not self.cooldown):
@@ -160,7 +160,7 @@ class Heal:
         self.actif = True
 
     def dessiner(self, screen):
-        screen.blit(Heart_img, (self.x - Heart_img.get_width()//2, self.y - Heart_img.get_height()//2))
+        screen.blit(Heart_image, (self.x - Heart_image.get_width()//2, self.y - Heart_image.get_height()//2))
 
     def collision(self, player):
         if(abs(self.x - player.x) < self.r + player.r):
