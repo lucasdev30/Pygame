@@ -9,6 +9,14 @@ w = 1280
 h = 800
 screen = pygame.display.set_mode((w, h))
 
+Sans_Title = pygame.image.load("Comic_Sans.png")
+Sans_Title = pygame.transform.scale(Sans_Title, (300, 50))
+
+Sans_Title_Image = pygame.image.load("Sans.png")
+Sans_Title_Image = pygame.transform.scale(Sans_Title_Image, (200, 200))
+
+
+
 Heart_image = pygame.image.load("Red Heart.png")
 Heart_image = pygame.transform.scale(Heart_image, (30, 30))
 
@@ -231,6 +239,9 @@ while running:
     screen.fill("black")
 
     if(etat == "menu"):
+        screen.blit(Sans_Title, (w//2 - 140, h//2 - 180))
+        screen.blit(Sans_Title_Image, (w//2 + 150, h//2 - 90))
+
         bouton_start.dessiner(screen)
         bouton_quitter.dessiner(screen)
 
@@ -259,7 +270,7 @@ while running:
     if(game_over):
         font = pygame.font.Font(None, 80)
         text = font.render("GAME OVER", True, "white")
-        screen.blit(text, (w/2 - 170, h/2 - 30))
+        screen.blit(text, (w/2 - 170, h/2 - 80))
 
         bouton_quitter_fin.dessiner(screen)
 
