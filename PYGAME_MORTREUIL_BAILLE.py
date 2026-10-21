@@ -1,6 +1,11 @@
 import pygame
 import random
 
+
+# CODE REALISE PAR : Lucas Baille et Anaïs MORTREUIL
+
+
+
 pygame.init()
 pygame.mixer.init()
 
@@ -11,7 +16,7 @@ screen = pygame.display.set_mode((w, h))
 
 Sans_Title = pygame.image.load("Comic_Sans.png")
 Sans_Title = pygame.transform.scale(Sans_Title, (300, 50))
-
+ 
 Sans_Title_Image = pygame.image.load("Sans.png")
 Sans_Title_Image = pygame.transform.scale(Sans_Title_Image, (200, 200))
 
