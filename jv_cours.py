@@ -3,16 +3,19 @@ import random
 
 pygame.init()
 pygame.mixer.init()
+pygame.display.set_mode()
 
+Heart_img = pygame.image.load("Red Heart.png").convert_alpha()
+Heart_img = pygame.transform.scale(Heart_img, (30, 30))
 
 # fenêtre
-w = 1280
-h = 800
+w = 896
+h = 414
 screen = pygame.display.set_mode((w, h))
 
 #horloge
 clock = pygame.time.Clock()
-FPS = 60
+FPS = 30
 
 deltaTime = 1/FPS
 
@@ -39,9 +42,8 @@ class Joueur:
         pygame.draw.circle(screen, color, (self.x, self.y), self.r)
 
     def afficher_pv(self, screen):
-        font = pygame.font.Font(None, 25)
-        text = font.render(f"PV : {self.pv}", True, "white")
-        screen.blit(text, (5, 5))
+        for i in range(self.pv):
+            screen.blit(Heart_img,(10 + i * 35, 10))
 
     def est_touche(self):
         if(not self.cooldown):
@@ -75,8 +77,9 @@ class Joueur:
             if self.y < cadre.y + cadre.h - self.r - cadre.b:
                 self.y += self.vitesse
 
-player = Joueur(w//2, h//2, 15)
 
+player = Joueur(w//2, h//2, 15)
+                                 
 # variables du cadre
 class Cadre:
     def __init__(self, w_cadre, h_cadre, x_cadre, y_cadre, b_cadre):
@@ -92,8 +95,8 @@ class Cadre:
         pygame.draw.rect(screen, "white", (self.x, self.y, self.w, self.h), self.b)
     
 
-w_cadre = 800
-h_cadre = 400
+w_cadre = 400
+h_cadre = 200
 
 cadre = Cadre(w_cadre, h_cadre, w//2 - w_cadre//2, h//2 - h_cadre//2, 2)
 
@@ -152,7 +155,6 @@ pygame.mixer.music.play()
 
 projectiles = []
 projectile_timer = 0
-
 
 phase = 0
 
@@ -237,7 +239,6 @@ while running:
 
             
     else :
-        projectile_timer -= deltaTime
         projectile_timer -= deltaTime 
 
 
@@ -262,7 +263,6 @@ while running:
 
     projectiles = projectiles_actifs
 
-    
 
     # AFFICHAGE
     
