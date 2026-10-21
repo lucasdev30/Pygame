@@ -23,6 +23,7 @@ class Joueur:
         self.x = x_player
         self.y = y_player
         self.r = r_player
+        self.vitesse = 4
         self.pv = 5
         self.cooldown = False
         self.cooldown_timer = 0
@@ -60,7 +61,6 @@ class Joueur:
 
         if keys[pygame.K_LEFT]:
             if self.x > cadre.x + self.r + cadre.b:
-                self.x -= 1
                 self.x -= self.vitesse
 
         if keys[pygame.K_RIGHT]:
@@ -69,9 +69,11 @@ class Joueur:
 
         if keys[pygame.K_UP]:
             if self.y > cadre.y + self.r + cadre.b:
+                self.y -= self.vitesse
 
         if keys[pygame.K_DOWN]:
             if self.y < cadre.y + cadre.h - self.r - cadre.b:
+                self.y += self.vitesse
 
 player = Joueur(w//2, h//2, 15)
 
