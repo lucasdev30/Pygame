@@ -29,9 +29,10 @@ class Joueur:
         return self.pv <=0
 
     def dessiner(self, screen):
-        color = "red"
+        color = "cyan"
         if(self.cooldown):
             color = "grey"
+            color = "pink"
         pygame.draw.circle(screen, color, (self.x, self.y), self.r)
 
     def afficher_pv(self, screen):
@@ -58,18 +59,17 @@ class Joueur:
         if keys[pygame.K_LEFT]:
             if self.x > cadre.x + self.r + cadre.b:
                 self.x -= 1
+                self.x -= self.vitesse
 
         if keys[pygame.K_RIGHT]:
             if self.x < cadre.x + cadre.w - self.r - cadre.b:
-                self.x += 1
+                self.x += self.vitesse
 
         if keys[pygame.K_UP]:
             if self.y > cadre.y + self.r + cadre.b:
-                self.y -= 1
 
         if keys[pygame.K_DOWN]:
             if self.y < cadre.y + cadre.h - self.r - cadre.b:
-                self.y += 1
 
 player = Joueur(w//2, h//2, 20)
 
