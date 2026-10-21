@@ -2,6 +2,8 @@ import pygame
 import random
 
 pygame.init()
+pygame.mixer.init()
+
 
 # fenêtre
 w = 1280
@@ -71,7 +73,7 @@ class Joueur:
             if self.y < cadre.y + cadre.h - self.r - cadre.b:
                 self.y += 1
 
-player = Joueur(w//2, h//2, 20)
+player = Joueur(w//2, h//2, 15)
 
 # variables du cadre
 class Cadre:
@@ -141,7 +143,8 @@ class Projectile:
                 self.actif = False
         #print(self.actif)
             
-
+pygame.mixer.music.load("Megalovania.mp3")
+pygame.mixer.music.play()
 
 # PROJECTILES
 
