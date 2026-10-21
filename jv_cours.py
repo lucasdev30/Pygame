@@ -3,19 +3,18 @@ import random
 
 pygame.init()
 pygame.mixer.init()
-pygame.display.set_mode()
+
+# fenêtre
+w = 1280
+h = 800
+screen = pygame.display.set_mode((w, h))
 
 Heart_img = pygame.image.load("Red Heart.png").convert_alpha()
 Heart_img = pygame.transform.scale(Heart_img, (30, 30))
 
-# fenêtre
-w = 896
-h = 414
-screen = pygame.display.set_mode((w, h))
-
 #horloge
 clock = pygame.time.Clock()
-FPS = 30
+FPS = 60
 
 deltaTime = 1/FPS
 
@@ -95,8 +94,8 @@ class Cadre:
         pygame.draw.rect(screen, "white", (self.x, self.y, self.w, self.h), self.b)
     
 
-w_cadre = 400
-h_cadre = 200
+w_cadre = 800
+h_cadre = 400
 
 cadre = Cadre(w_cadre, h_cadre, w//2 - w_cadre//2, h//2 - h_cadre//2, 2)
 
@@ -129,7 +128,7 @@ class Projectile:
         
         # s'il va à droite
         if(self.dir_x > 0):
-            if(self.dir_x > w):
+            if(self.x > w):
                 self.actif = False
 
         # s'il va à gauche
@@ -149,28 +148,25 @@ class Projectile:
         #print(self.actif)
 
 
-
-class Button:
-    def __init__(self, x, y, width, height, text, color, text_color):
-        self.rect = pygame.Rect(x, y, width, height)
-        self.text = text
-        self.color = color
-        self.text_color = text_color
-        self.font = pygame.font.Font(None, 36)
-
-    def dessiner(self, surface):
-        pygame.draw.rect(surface, self.color, self.rect)
-        text_surf = self.font.render(self.text, True, self.text_color)
-        text_rect = text_surf.get_rect(center=self.rect.center)
-        surface.blit(text_surf, text_rect)
-
-    def est_clique(self, event):
-        if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-            if self.rect.collidepoint(event.pos):
-                return True
-        return False
-
-
+# class Button:
+#     def __init__(self, x, y, width, height, text, color, text_color):
+#         self.rect = pygame.Rect(x, y, width, height)
+#         self.text = text
+#         self.color = color
+#         self.text_color = text_color
+#         self.font = pygame.font.Font(None, 36)
+#
+#     def dessiner(self, surface):
+#         pygame.draw.rect(surface, self.color, self.rect)
+#         text_surf = self.font.render(self.text, True, self.text_color)
+#         text_rect = text_surf.get_rect(center=self.rect.center)
+#         surface.blit(text_surf, text_rect)
+#
+#     def est_clique(self, event):
+#         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
+#             if self.rect.collidepoint(event.pos):
+#                 return True
+#         return False
 
             
 pygame.mixer.music.load("Megalovania.mp3")
@@ -188,36 +184,31 @@ running = True
 timer_phase = 10
 pause_timer = 3
 
-
-etat = "menu"    
-
-bouton_start = Button(w//2 - 100, h//2 - 60, 200, 50, "START", "white", "black")
-bouton_quitter = Button(w//2 - 100, h//2 + 20, 200, 50, "QUITTER", "white", "black")
-
+# etat = "menu"
+#
+# bouton_start = Button(w//2 - 100, h//2 - 60, 200, 50, "START", "white", "black")
+# bouton_quitter = Button(w//2 - 100, h//2 + 20, 200, 50, "QUITTER", "white", "black")
 
 while running:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             running = False
 
-         if etat == "menu":
-                if bouton_start.is_clicked(e):
-                    etat = "jeu"
-                if bouton_quitter.is_clicked(e):
-                    running = False
-
+        # if etat == "menu":
+        #     if bouton_start.est_clique(e):
+        #         etat = "jeu"
+        #     if bouton_quitter.est_clique(e):
+        #         running = False
 
     screen.fill("black")
 
-
-    if(etat == "menu"):
-        bouton_start.draw(screen)
-        bouton_quitter.draw(screen)
-
-        pygame.display.flip()
-        clock.tick(FPS)
-        continue
-    
+    # if(etat == "menu"):
+    #     bouton_start.dessiner(screen)
+    #     bouton_quitter.dessiner(screen)
+    #
+    #     pygame.display.flip()
+    #     clock.tick(FPS)
+    #     continue
 
     if(timer_phase <= 0):
         phase += 1
@@ -296,8 +287,7 @@ while running:
     player.deplacer(cadre)
     player.etat_cooldown(deltaTime)
 
-
-    
+  
     
 
     projectiles_actifs = []
