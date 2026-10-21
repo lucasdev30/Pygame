@@ -155,13 +155,13 @@ class Button:
         self.text_color = text_color
         self.font = pygame.font.Font(None, 36)
 
-    def draw(self, surface):
+    def dessiner(self, surface):
         pygame.draw.rect(surface, self.color, self.rect)
         text_surf = self.font.render(self.text, True, self.text_color)
         text_rect = text_surf.get_rect(center=self.rect.center)
         surface.blit(text_surf, text_rect)
 
-    def is_clicked(self, event):
+    def est_clique(self, event):
         if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
             if self.rect.collidepoint(event.pos):
                 return True
@@ -187,14 +187,35 @@ timer_phase = 10
 pause_timer = 3
 
 
+etat = "menu"    
+
+bouton_start = Button(w//2 - 100, h//2 - 60, 200, 50, "START", "white", "black")
+bouton_quitter = Button(w//2 - 100, h//2 + 20, 200, 50, "QUITTER", "white", "black")
+
 
 while running:
     for e in pygame.event.get():
         if e.type == pygame.QUIT:
             running = False
 
+         if etat == "menu":
+                if bouton_start.is_clicked(e):
+                    etat = "jeu"
+                if bouton_quitter.is_clicked(e):
+                    running = False
+
 
     screen.fill("black")
+
+
+    if(etat == "menu"):
+        bouton_start.draw(screen)
+        bouton_quitter.draw(screen)
+
+        pygame.display.flip()
+        clock.tick(FPS)
+        continue
+    
 
     if(timer_phase <= 0):
         phase += 1
