@@ -199,6 +199,8 @@ pygame.mixer.music.load("Once Upon a Time.mp3")
 pygame.mixer.music.play(-1)
 
 Musique_Jeu = "Megalovania.mp3"
+Musique_Win = "Finale.mp3"
+Musique_Fail = "Game Over.mp3"
 
 # PROJECTILES
 
@@ -254,17 +256,22 @@ while running:
         clock.tick(FPS)
         continue
 
-    if(timer_phase <= 0):
+    if(timer_phase <= 0 and phase < 3):
         phase += 1
         timer_phase = 10
         projectiles = []
         heals = []
         pause_timer = 3
+        if phase == 3:
+            pygame.mixer.music.load(Musique_Win)
+            pygame.mixer.music.play(-1)
 
     if(phase == 3):
+        
         font = pygame.font.Font(None, 50)
         text = font.render ("VICTOIRE", True, "white")
         screen.blit(text, (w/2 - 80, h/2 - 30))
+            
 
         bouton_quitter_fin.dessiner(screen)
 
@@ -366,7 +373,10 @@ while running:
 
     if(player.est_mort()):
         game_over = True
-        pygame.mixer.music.stop()
+        pygame.mixer.music.play()
+        pygame.mixer.music.load(Musique_Fail)
+        pygame.mixer.music.play(-1)
+
 
     pygame.display.flip()
 
