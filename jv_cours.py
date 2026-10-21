@@ -187,7 +187,10 @@ class Button:
 
 
 # MUSIQUE
-pygame.mixer.music.load("Megalovania.mp3")
+pygame.mixer.music.load("Once Upon a Time.mp3")
+pygame.mixer.music.play(-1)
+
+Musique_Jeu = "Megalovania.mp3"
 
 # PROJECTILES
 
@@ -221,6 +224,8 @@ while running:
             if bouton_start.est_clique(e):
                 etat = "jeu"
                 pygame.mixer.music.play()
+                pygame.mixer.music.load(Musique_Jeu)
+                pygame.mixer.music.play(-1)
             if bouton_quitter.est_clique(e):
                 running = False
         elif game_over or phase == 3:
