@@ -4,8 +4,8 @@ import random
 pygame.init()
 
 # fenêtre
-w = 320
-h = 240
+w = 1280
+h = 800
 screen = pygame.display.set_mode((w, h))
 
 #horloge
@@ -29,9 +29,9 @@ class Joueur:
         return self.pv <=0
 
     def dessiner(self, screen):
-        color = "cyan"
+        color = "red"
         if(self.cooldown):
-            color = "pink"
+            color = "grey"
         pygame.draw.circle(screen, color, (self.x, self.y), self.r)
 
     def afficher_pv(self, screen):
@@ -71,7 +71,7 @@ class Joueur:
             if self.y < cadre.y + cadre.h - self.r - cadre.b:
                 self.y += 1
 
-player = Joueur(w//2, h//2, 5)
+player = Joueur(w//2, h//2, 20)
 
 # variables du cadre
 class Cadre:
@@ -88,8 +88,8 @@ class Cadre:
         pygame.draw.rect(screen, "white", (self.x, self.y, self.w, self.h), self.b)
     
 
-w_cadre = 200
-h_cadre = 100
+w_cadre = 800
+h_cadre = 400
 
 cadre = Cadre(w_cadre, h_cadre, w//2 - w_cadre//2, h//2 - h_cadre//2, 2)
 
