@@ -50,6 +50,11 @@ class Joueur:
             self.pv -= 1
             self.cooldown_timer = 1
 
+    def est_heal(self):
+        if(not self.cooldown):
+            self.cooldown = True
+            self.pv += 1
+            self.cooldown_timer = 1
 
     def etat_cooldown(self, deltaTime):
         if self.cooldown:
@@ -122,8 +127,6 @@ class Projectile:
             if(abs(self.y - player.y) < self.r + player.r):
                 player.est_touche()
 
-
-
     def est_hors_ecran(self):
         
         # s'il va à droite
@@ -147,6 +150,17 @@ class Projectile:
                 self.actif = False
         #print(self.actif)
 
+class Heal:
+    def __init__(self, x_heal, y_heal, r_heal):
+        self.x = x_heal
+        self.y = y_heal
+        self.r = r_heal
+        
+    def colision(self, player):
+        if(abs(self.x - player.x) < self.r + player.r):
+            if(abs(self.y - player.y) < self.r + player.r):
+                 player.est_heal()
+            
 
 # class Button:
 #     def __init__(self, x, y, width, height, text, color, text_color):
@@ -168,7 +182,7 @@ class Projectile:
 #                 return True
 #         return False
 
-            
+
 pygame.mixer.music.load("Megalovania.mp3")
 pygame.mixer.music.play()
 
