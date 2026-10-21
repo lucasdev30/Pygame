@@ -9,7 +9,7 @@ w = 1280
 h = 800
 screen = pygame.display.set_mode((w, h))
 
-Heart_img = pygame.image.load("Red Heart.png").convert_alpha()
+Heart_img = pygame.image.load("Red Heart.png")
 Heart_img = pygame.transform.scale(Heart_img, (30, 30))
 
 #horloge
