@@ -29,9 +29,9 @@ class Joueur:
         return self.pv <=0
 
     def dessiner(self, screen):
-        color = "green"
+        color = "cyan"
         if(self.cooldown):
-            color = "red"
+            color = "pink"
         pygame.draw.circle(screen, color, (self.x, self.y), self.r)
 
     def afficher_pv(self, screen):
